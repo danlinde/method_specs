@@ -23,7 +23,7 @@ describe Hash do
 
 	it 'should return two element array for given key' do
 		hash = {"home" => "London", "Away" => "Crystal Palace"}
-		expect(hash["Away"]).to eq "Crystal Palace"
+		expect(hash.assoc("Away")).to eq ["Away", "Crystal Palace"]
 	end
 
 	it 'should remove all key/value pairs from hash' do
@@ -31,5 +31,26 @@ describe Hash do
 		expect(hash.clear).to be_empty
 	end
 
+	it 'should return value from hash for given key' do
+		hash = {"home" => "London", "Away" => "Crystal Palace"}
+		expect(hash.fetch("Away")).to eq "Crystal Palace"
+	end
+
+	it "should convert hash to array - (depth)" do
+		hash = { "feline" => ["Tom", "Felix"], "equine" => "Seabiscuit"}
+		expect(hash.flatten).to eq ["feline", ["Tom", "Felix"], "equine", "Seabiscuit"]
+		expect(hash.flatten(2)).to eq ["feline", "Tom", "Felix", "equine", "Seabiscuit"]
+	end
+
+	it 'should merge two hashes, overwriting old info and storing info in new hash' do
+		hash1 = {"a" => 100, "b" => 200, "c" => 300}
+		hash2 = {"a" => 100, "b" => 250, "c" => 500, "d" => 1000}	
+		expect(hash1.merge(hash2)).to eq({"a" => 100, "b" => 250, "c" => 500, "d" => 1000})
+	end
+
+	it 'should remove the first key/value pair from hash and return as array' do
+		hash = {"a" => 100, "b" => 200, "c" => 300}
+		expect(hash.shift).to eq ["a", 100]
+	end
 	
 end
